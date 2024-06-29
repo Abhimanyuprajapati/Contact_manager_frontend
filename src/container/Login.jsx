@@ -127,36 +127,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-
-// const username = result.user.displayName;
-// const useremail = result.user.email;
-// const userurl = result.user.photoURL;
-// const phoneNumber = result.user.phoneNumber;
-// const userDataArr = [{
-//     username: username,
-//     useremail: useremail,
-//     phoneNumber: phoneNumber,
-//     userurl: userurl
-// }];
-// localStorage.setItem('user', JSON.stringify(userDataArr));
-// toast.success('Registered Successfully')
-// setTimeout(() => {
-//     navigate('/');
-//     closeBtnHandler();
-// }, 1200)
-
-
-
-
-
- // const response = await fetch("http://localhost:3030/api/loginusers", {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({ email: credentials.email, password: credentials.password })
-        // });

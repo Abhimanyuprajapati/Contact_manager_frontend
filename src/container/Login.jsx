@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import firebaseApp from '../../firebase';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -50,6 +52,33 @@ const Login = () => {
         setCredentials({ ...credentials, [event.target.name]: event.target.value });
     };
 
+    const local_store_googledata="googledata";
+    const signInWithGoogle = async () => {
+        const auth = getAuth(firebaseApp);
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            console.log("Google Auth Result:", result);
+            const username = result.user.displayName;
+            const useremail = result.user.email;
+            const userurl = result.user.photoURL;
+            const userDataArr = [{
+                username: username,
+                useremail: useremail,
+                userurl: userurl
+            }];
+            localStorage.setItem(local_store_googledata,JSON.stringify(userDataArr));
+            toast.success('Registered Successfully')
+            setTimeout(() => {
+                navigate('/home');
+                closeBtnHandler();
+            }, 1200)
+        } catch (error) {
+            console.error("Google Auth Error:", error);
+            setError(error.message); 
+        }
+    };
+
     return (
         <>
             <div className="container">
@@ -85,9 +114,8 @@ const Login = () => {
                         </Link>
 
                         <p>or</p>
-
-                        <button>Sign in with Google</button>
                     </form>
+                    <button  onClick={signInWithGoogle}>Sign in with Google</button>
                 </div>
             </div>
             <Toaster
@@ -99,6 +127,29 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+// const username = result.user.displayName;
+// const useremail = result.user.email;
+// const userurl = result.user.photoURL;
+// const phoneNumber = result.user.phoneNumber;
+// const userDataArr = [{
+//     username: username,
+//     useremail: useremail,
+//     phoneNumber: phoneNumber,
+//     userurl: userurl
+// }];
+// localStorage.setItem('user', JSON.stringify(userDataArr));
+// toast.success('Registered Successfully')
+// setTimeout(() => {
+//     navigate('/');
+//     closeBtnHandler();
+// }, 1200)
+
+
 
 
 

@@ -7,6 +7,7 @@ import firebaseApp from '../../firebase';
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: "", password: "" });
 
+
     let navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,9 +35,9 @@ const Login = () => {
                 navigate("/home");
             }
 
-            if (!json.data) {
-                throw new Error("Data not found");
-            }
+            // if (!json.data) {
+            //     throw new Error("Data not found");
+            // }
     
             if (!json.success) {
                 toast.error("Enter Valid Credentials")
